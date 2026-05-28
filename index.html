@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>804 Strength · Q3 2026 KPI Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#e9ebee;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#1a1a1a;-webkit-font-smoothing:antialiased}
+.page{width:1180px;margin:24px auto;background:#fff;border:1px solid #d4d6da;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.tophead{background:#000;color:#fff;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #1a1a1a}
+.tophead h1{font-size:14px;font-weight:600;letter-spacing:.3px}
+.tophead .sub{font-size:11px;font-weight:400;color:#bdbdbd;letter-spacing:.4px}
+.body{padding:18px 22px 14px}
+.band{margin-bottom:16px}
+.band-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#1a1a1a;margin-bottom:4px}
+.band-sub{font-size:10.5px;color:#6b6f76;margin-bottom:8px;letter-spacing:.2px}
+
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.card{background:#fff;border:1px solid #d4d6da;padding:12px 14px;min-height:130px}
+.card h3{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:#6b6f76;font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #ececec}
+.card .big{font-size:14px;font-weight:700;color:#0a0a0a;margin-bottom:6px}
+.card ul{list-style:none;font-size:11.5px;line-height:1.65;color:#2b2d31}
+.card ul li{padding:1px 0}
+.card .pill{display:inline-block;background:#111;color:#fff;font-size:9.5px;letter-spacing:.6px;padding:2px 7px;margin-top:6px;text-transform:uppercase;font-weight:600}
+
+table{width:100%;border-collapse:collapse;font-size:10.5px;background:#fff;border:1px solid #d4d6da}
+thead th{background:#f4f5f7;color:#1a1a1a;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:9.5px;text-align:left;padding:8px 7px;border-bottom:2px solid #1a1a1a;border-right:1px solid #e3e4e7;vertical-align:top}
+thead th:last-child{border-right:none}
+tbody td{padding:8px 7px;border-bottom:1px solid #ececec;border-right:1px solid #f0f1f3;vertical-align:top;line-height:1.45;color:#2b2d31}
+tbody td:last-child{border-right:none}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even){background:#fafbfc}
+.asset-name{font-weight:700;color:#0a0a0a}
+.chip{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 6px;text-transform:uppercase;border-radius:2px;margin-top:3px}
+.chip.green{background:#e3f3e4;color:#1d6b2a;border:1px solid #b9dcbd}
+.chip.yellow{background:#fcf3d9;color:#7a5a00;border:1px solid #e8d491}
+.chip.red{background:#fbe2e2;color:#8a1f1f;border:1px solid #e3b6b6}
+.status-cell .chip{display:block;width:fit-content;margin-bottom:2px}
+
+.rules{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rule{background:#fff;border:1px solid #d4d6da;padding:12px 13px}
+.rule h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#0a0a0a;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #ececec}
+.thresholds{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.thr{display:flex;align-items:center;font-size:10.5px}
+.thr .chip{min-width:64px;text-align:center;margin:0 8px 0 0}
+.rule .label{font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;color:#6b6f76;font-weight:700;margin:8px 0 4px}
+.rule p,.rule li{font-size:10.5px;line-height:1.5;color:#2b2d31}
+.rule ul{list-style:none;padding:0}
+.rule ul li{padding:2px 0;border-bottom:1px dotted #ececec}
+.rule ul li:last-child{border-bottom:none}
+
+.band4{display:grid;grid-template-columns:1.15fr 1fr;gap:10px}
+.workflow-box{background:#fff;border:1px solid #d4d6da;padding:12px 13px}
+.workflow-box h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#0a0a0a;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #ececec}
+.chain{display:flex;align-items:stretch;gap:0;margin-bottom:10px}
+.step{flex:1;background:#fafbfc;border:1px solid #d4d6da;padding:9px 10px;position:relative}
+.step .num{font-size:9px;letter-spacing:.8px;color:#6b6f76;font-weight:700;text-transform:uppercase}
+.step .name{font-size:12px;font-weight:700;color:#0a0a0a;margin:3px 0 6px;padding-bottom:5px;border-bottom:1px solid #ececec}
+.step ul{list-style:none;font-size:10.5px;line-height:1.55;color:#2b2d31}
+.step ul li:before{content:"›";color:#6b6f76;margin-right:6px;font-weight:700}
+.arrow{display:flex;align-items:center;justify-content:center;width:22px;color:#000;font-size:18px;font-weight:700;background:#fff}
+.chain-note{font-size:10.5px;color:#3a3d42;line-height:1.5;padding:8px 10px;background:#f4f5f7;border-left:3px solid #000;font-style:italic}
+.leadership .lblock{margin-bottom:10px}
+.leadership .lhead{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#6b6f76;font-weight:700;margin-bottom:4px}
+.leadership ul{list-style:none}
+.leadership ul li{font-size:10.5px;line-height:1.55;padding:2px 0 2px 12px;position:relative;color:#2b2d31}
+.leadership ul li:before{content:"–";position:absolute;left:0;color:#6b6f76}
+
+.footer{border-top:1px solid #d4d6da;background:#fafbfc;padding:9px 22px;display:flex;justify-content:space-between;font-size:10px;color:#6b6f76;letter-spacing:.3px}
+.footer .brand{font-weight:700;color:#1a1a1a}
+
+/* ── Interactive styles ── */
+.ctrl-bar{display:flex;align-items:center;gap:8px;padding:7px 22px;background:#f4f5f7;border-bottom:1px solid #d4d6da}
+.ctrl-bar button{font-size:9.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 12px;border:1px solid #bbb;background:#fff;cursor:pointer;color:#1a1a1a;font-family:inherit;transition:background .15s,color .15s}
+.ctrl-bar button:hover{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.mode-badge{margin-left:auto;font-size:9px;letter-spacing:.9px;text-transform:uppercase;color:#9a9d9f;font-weight:600;border:1px solid #e3e4e7;padding:3px 9px;background:#fff}
+
+.baseline-ref{font-size:9px;color:#b0b3b8;line-height:1.4;margin-bottom:5px;font-style:italic}
+.actual-inputs{display:flex;flex-direction:column;gap:3px}
+.inp-row{display:flex;align-items:center;gap:3px}
+.inp-row label{width:62px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#6b6f76;text-align:right;flex-shrink:0;line-height:1.3}
+.inp-row input[type=number]{width:58px;padding:2px 4px;font-size:10px;border:1px solid #d4d6da;background:#fff;color:#1a1a1a;font-family:inherit;-moz-appearance:textfield;appearance:textfield}
+.inp-row input[type=number]::-webkit-inner-spin-button,.inp-row input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+.inp-row input[type=number]:focus{outline:none;border-color:#555}
+.inp-row input[type=number]:hover{border-color:#999}
+
+.calcs-out{margin-top:5px;padding-top:4px;border-top:1px dotted #d4d6da;font-size:9.5px;color:#2b2d31;line-height:1.7;min-height:0}
+
+.dyn-status-wrap{margin-top:6px;padding-top:5px;border-top:1px dotted #d4d6da}
+.dyn-chip-row{min-height:18px}
+.dyn-action{display:none;font-size:9.5px;margin-top:5px;padding:4px 7px;line-height:1.4;border-left:2px solid #ccc;background:#f9f9f9}
+.dyn-action.g{border-left-color:#1d6b2a;background:#f2fbf3;color:#183d1e}
+.dyn-action.y{border-left-color:#7a5a00;background:#fdfbee;color:#4a3700}
+.dyn-action.r{border-left-color:#8a1f1f;background:#fdf2f2;color:#5a1010}
+
+.chart-band{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.chart-box{background:#fff;border:1px solid #d4d6da;padding:12px 13px}
+.chart-box h4{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#0a0a0a;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #ececec}
+.chart-box canvas{display:none;width:100%}
+.chart-empty{font-size:10px;color:#b0b3b8;font-style:italic;text-align:center;padding:30px 0}
+
+@media print{
+  body{background:#fff}
+  .page{margin:0;border:none;box-shadow:none}
+  .ctrl-bar{display:none}
+  @page{size:landscape}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="tophead">
+    <div>
+      <h1>804 Strength · Q3 2026 KPI Dashboard</h1>
+      <div class="sub">Vara Digital Marketing | Internal Performance Sheet</div>
+    </div>
+    <div class="sub" style="text-align:right">One-Page Leadership View · Landscape Format</div>
+  </div>
+
+  <div class="ctrl-bar">
+    <button onclick="saveDashboard(this)">Save</button>
+    <button onclick="resetDashboard()">Reset</button>
+    <button onclick="restoreDefaults()">Restore Defaults</button>
+    <span class="mode-badge">Interactive Input Mode</span>
+  </div>
+
+  <div class="body">
+
+    <!-- BAND 1 -->
+    <div class="band">
+      <div class="cards">
+        <div class="card">
+          <h3>North Star</h3>
+          <div class="big">Memberships Started</div>
+          <ul>
+            <li>· Community engagement</li>
+            <li>· Authority + conversions</li>
+          </ul>
+          <span class="pill">Q3 Target: 3–6 Booked Consults</span>
+        </div>
+        <div class="card">
+          <h3>Channel Priorities</h3>
+          <ul>
+            <li><strong>Newsletter</strong> → Open + CTR</li>
+            <li><strong>Social</strong> → Engagement + positioning</li>
+            <li><strong>Blog</strong> → Authority + assisted conversion</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Baseline Snapshot</h3>
+          <ul>
+            <li>IG: <strong>579</strong> &nbsp;·&nbsp; FB: <strong>434</strong></li>
+            <li>NL contacts: <strong>660</strong></li>
+            <li>Delivered: <strong id="snap_delivered">448</strong></li>
+            <li>Open Rate: <strong id="snap_open_rate">57.9%</strong> &nbsp;·&nbsp; CTR: <strong id="snap_ctr">17.0%</strong></li>
+            <li>Unsubscribes: <strong id="snap_unsubs">10</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- BAND 2 -->
+    <div class="band">
+      <div class="band-title">Q3 Asset Performance Matrix</div>
+      <div class="band-sub">Enter actuals below — status and recommendations update automatically.</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:9%">Asset</th>
+            <th style="width:12%">Objective</th>
+            <th style="width:9%">Primary KPI</th>
+            <th style="width:9%">Secondary KPI</th>
+            <th style="width:13%">Actual Results</th>
+            <th style="width:11%">Realistic Target</th>
+            <th style="width:15%">Status / Next Action</th>
+            <th style="width:13%">Drives Next</th>
+            <th style="width:9%">Source of Truth</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td class="asset-name">Q3 Newsletter</td>
+            <td>Open quarter, reinforce trust, drive clicks into quarter content and next-step actions</td>
+            <td>Open Rate</td>
+            <td>CTR / CTOR</td>
+            <td>
+              <div class="baseline-ref">Base: 57.9% open · 17% CTR</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Delivered</label><input type="number" id="nl_delivered" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Opens</label><input type="number" id="nl_opens" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Clicks</label><input type="number" id="nl_clicks" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Unsubs</label><input type="number" id="nl_unsubs" min="0" placeholder="0" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="nl_calcs"></div>
+            </td>
+            <td>50–60% open · 10–15% CTR · &lt;1.5% unsub</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥55%</span>
+              <span class="chip yellow">Yellow 45–54%</span>
+              <span class="chip red">Red &lt;45%</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="nl_status"></div>
+                <div class="dyn-action" id="nl_action"></div>
+              </div>
+            </td>
+            <td>Blog traffic, CTA clicks, quarter engagement</td>
+            <td>GHL / Email / GA4</td>
+          </tr>
+
+          <tr>
+            <td class="asset-name">July Blog</td>
+            <td>Build local authority around choosing the right gym</td>
+            <td>Engaged Sessions</td>
+            <td>CTA Click Rate</td>
+            <td>
+              <div class="baseline-ref">New asset · no benchmark</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Eng. Sess</label><input type="number" id="jblog_engaged" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Total Sess</label><input type="number" id="jblog_total" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>CTA Clicks</label><input type="number" id="jblog_cta" min="0" placeholder="0" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="jblog_calcs"></div>
+            </td>
+            <td>100+ engaged sessions · 1–3% CTA clicks</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥100</span>
+              <span class="chip yellow">Yellow 60–99</span>
+              <span class="chip red">Red &lt;60</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="jblog_status"></div>
+                <div class="dyn-action" id="jblog_action"></div>
+              </div>
+            </td>
+            <td>Trust, page exploration, assisted conversion</td>
+            <td>GA4 / GSC / GHL</td>
+          </tr>
+
+          <tr>
+            <td class="asset-name">August Blog</td>
+            <td>Lower fear barrier for adults 40+ and returning lifters</td>
+            <td>Engaged Sessions</td>
+            <td>CTA clicks to getting-started paths</td>
+            <td>
+              <div class="baseline-ref">New asset · no benchmark</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Eng. Sess</label><input type="number" id="ablog_engaged" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Total Sess</label><input type="number" id="ablog_total" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>CTA Clicks</label><input type="number" id="ablog_cta" min="0" placeholder="0" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="ablog_calcs"></div>
+            </td>
+            <td>100+ engaged sessions · 1–3% CTA · 1:30–2:30+ engagement</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥100</span>
+              <span class="chip yellow">Yellow 60–99</span>
+              <span class="chip red">Red &lt;60</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="ablog_status"></div>
+                <div class="dyn-action" id="ablog_action"></div>
+              </div>
+            </td>
+            <td>Trust with cautious prospects, mid-funnel intent</td>
+            <td>GA4 / GSC / GHL</td>
+          </tr>
+
+          <tr>
+            <td class="asset-name">September Blog</td>
+            <td>Use realistic proof to support conversion intent</td>
+            <td>CTA-Assisted Conversion</td>
+            <td>Engagement Depth</td>
+            <td>
+              <div class="baseline-ref">New asset · no benchmark</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Eng. Sess</label><input type="number" id="sblog_engaged" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Total Sess</label><input type="number" id="sblog_total" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>CTA Clicks</label><input type="number" id="sblog_cta" min="0" placeholder="0" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="sblog_calcs"></div>
+            </td>
+            <td>2–4% CTA click rate · stronger engagement vs July</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥3% CTA</span>
+              <span class="chip yellow">Yellow 1.5–2.9%</span>
+              <span class="chip red">Red &lt;1.5%</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="sblog_status"></div>
+                <div class="dyn-action" id="sblog_action"></div>
+              </div>
+            </td>
+            <td>Stronger consult / trial consideration</td>
+            <td>GA4 / GHL / GSC</td>
+          </tr>
+
+          <tr>
+            <td class="asset-name">July Socials</td>
+            <td>Increase local recognition and "the gym people talk about" positioning</td>
+            <td>Engagement Rate</td>
+            <td>Profile Visits</td>
+            <td>
+              <div class="baseline-ref">Early-stage local presence</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Engmts</label><input type="number" id="jsoc_eng" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Followers</label><input type="number" id="jsoc_followers" min="0" placeholder="579" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="jsoc_calcs"></div>
+            </td>
+            <td>3–5% ER · profile visits rising</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥4%</span>
+              <span class="chip yellow">Yellow 2.5–3.9%</span>
+              <span class="chip red">Red &lt;2.5%</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="jsoc_status"></div>
+                <div class="dyn-action" id="jsoc_action"></div>
+              </div>
+            </td>
+            <td>Recognition, curiosity, profile exploration</td>
+            <td>Meta Insights</td>
+          </tr>
+
+          <tr>
+            <td class="asset-name">August Socials</td>
+            <td>Build trust and usefulness for adults restarting training</td>
+            <td>Saves + Shares</td>
+            <td>Profile Visits / Link Clicks</td>
+            <td>
+              <div class="baseline-ref">Early-stage local presence</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Engmts</label><input type="number" id="asoc_eng" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Followers</label><input type="number" id="asoc_followers" min="0" placeholder="579" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="asoc_calcs"></div>
+            </td>
+            <td>3–5% ER · save/share growth vs July</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥4% ER</span>
+              <span class="chip yellow">Yellow 2.5–3.9%</span>
+              <span class="chip red">Red &lt;2.5%</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="asoc_status"></div>
+                <div class="dyn-action" id="asoc_action"></div>
+              </div>
+            </td>
+            <td>Authority, emotional resonance, top-of-mind trust</td>
+            <td>Meta Insights / GA4</td>
+          </tr>
+
+          <tr>
+            <td class="asset-name">September Socials</td>
+            <td>Use community proof to increase belonging and consideration</td>
+            <td>Engagement Quality</td>
+            <td>Profile Actions / CTA Clicks</td>
+            <td>
+              <div class="baseline-ref">Early-stage local presence</div>
+              <div class="actual-inputs">
+                <div class="inp-row"><label>Engmts</label><input type="number" id="ssoc_eng" min="0" placeholder="0" oninput="calculate()"></div>
+                <div class="inp-row"><label>Followers</label><input type="number" id="ssoc_followers" min="0" placeholder="579" oninput="calculate()"></div>
+              </div>
+              <div class="calcs-out" id="ssoc_calcs"></div>
+            </td>
+            <td>3–5% ER · comments/shares improving</td>
+            <td class="status-cell">
+              <span class="chip green">Green ≥4% ER</span>
+              <span class="chip yellow">Yellow 2.5–3.9%</span>
+              <span class="chip red">Red &lt;2.5%</span>
+              <div class="dyn-status-wrap">
+                <div class="dyn-chip-row" id="ssoc_status"></div>
+                <div class="dyn-action" id="ssoc_action"></div>
+              </div>
+            </td>
+            <td>Social proof, inquiry readiness</td>
+            <td>Meta Insights / GA4 / GHL</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- BAND 3 -->
+    <div class="band">
+      <div class="band-title">Decision Rules — Operating Thresholds</div>
+      <div class="band-sub">
+        <span class="chip green" style="margin-right:4px">On Track</span>
+        <span class="chip yellow" style="margin-right:4px">Adjust</span>
+        <span class="chip red">Action Required</span>
+        &nbsp;&nbsp;Green = on track · Yellow = adjust next asset · Red = 48-hour response
+      </div>
+      <div class="rules">
+
+        <div class="rule">
+          <h4>Newsletter</h4>
+          <div class="thresholds">
+            <div class="thr"><span class="chip green">Green</span> Open Rate ≥55%</div>
+            <div class="thr"><span class="chip yellow">Yellow</span> 45–54%</div>
+            <div class="thr"><span class="chip red">Red</span> &lt;45%</div>
+          </div>
+          <div class="label">Meaning</div>
+          <ul>
+            <li><strong>Green</strong> — subject line + relevance + audience alignment are healthy</li>
+            <li><strong>Yellow</strong> — optimize subject line, timing, or list segmentation</li>
+            <li><strong>Red</strong> — likely audience mismatch, weak subject line, or send-timing problem</li>
+          </ul>
+          <div class="label">Next Action</div>
+          <ul>
+            <li>Green + strong CTR → repeat subject pattern</li>
+            <li>Green + weak CTR → improve section order / CTA hierarchy</li>
+            <li>Red → fix send logic before next issue</li>
+          </ul>
+        </div>
+
+        <div class="rule">
+          <h4>Blogs</h4>
+          <div class="thresholds">
+            <div class="thr"><span class="chip green">Green</span> Engaged Sessions ≥100</div>
+            <div class="thr"><span class="chip yellow">Yellow</span> 60–99</div>
+            <div class="thr"><span class="chip red">Red</span> &lt;60</div>
+          </div>
+          <div class="label">Meaning</div>
+          <ul>
+            <li><strong>Green</strong> — topic and title matched reader intent</li>
+            <li><strong>Yellow</strong> — topic has interest but weak entry or distribution</li>
+            <li><strong>Red</strong> — headline, angle, distribution, or relevance problem</li>
+          </ul>
+          <div class="label">Next Action</div>
+          <ul>
+            <li>Green + weak CTA clicks → improve internal CTA placement</li>
+            <li>Yellow → strengthen distribution and title framing</li>
+            <li>Red → revise angle before next blog</li>
+          </ul>
+        </div>
+
+        <div class="rule">
+          <h4>Socials</h4>
+          <div class="thresholds">
+            <div class="thr"><span class="chip green">Green</span> IG ER ≥4%</div>
+            <div class="thr"><span class="chip yellow">Yellow</span> 2.5–3.9%</div>
+            <div class="thr"><span class="chip red">Red</span> &lt;2.5%</div>
+          </div>
+          <div class="label">Meaning</div>
+          <ul>
+            <li><strong>Green</strong> — content is resonating and building recognition</li>
+            <li><strong>Yellow</strong> — content is visible but not sticky enough</li>
+            <li><strong>Red</strong> — weak hook, weak format, or low emotional relevance</li>
+          </ul>
+          <div class="label">Next Action</div>
+          <ul>
+            <li>Green → repeat theme / format</li>
+            <li>Yellow → improve hook and CTA</li>
+            <li>Red → change content angle, creative format, or posting logic</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BAND 4 -->
+    <div class="band">
+      <div class="band4">
+
+        <div class="workflow-box">
+          <h4>Workflow Chain — How Each Step Feeds the Next</h4>
+          <div class="chain">
+            <div class="step">
+              <div class="num">Step 1</div>
+              <div class="name">Newsletter</div>
+              <ul>
+                <li>Earn the open</li>
+                <li>Earn the click</li>
+                <li>Push traffic into quarter content</li>
+              </ul>
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+              <div class="num">Step 2</div>
+              <div class="name">Blog</div>
+              <ul>
+                <li>Earn engaged reading</li>
+                <li>Build trust and authority</li>
+                <li>Drive next-step click behavior</li>
+              </ul>
+            </div>
+            <div class="arrow">→</div>
+            <div class="step">
+              <div class="num">Step 3</div>
+              <div class="name">Social</div>
+              <ul>
+                <li>Reinforce recognition</li>
+                <li>Expand engagement and shareability</li>
+                <li>Build "this is the gym people talk about" positioning</li>
+              </ul>
+            </div>
+          </div>
+          <div class="chain-note">
+            Step 1 drives traffic into Step 2; Step 2 deepens trust; Step 3 widens recognition and keeps the brand socially alive between conversion moments.
+          </div>
+        </div>
+
+        <div class="workflow-box leadership">
+          <h4>Leadership View</h4>
+          <div class="lblock">
+            <div class="lhead">Risks</div>
+            <ul>
+              <li>Unsubscribe rate currently higher than preferred</li>
+              <li>Social audience still small, so quality matters more than raw volume</li>
+              <li>Blog success depends on topic-to-reader fit, not just publishing consistency</li>
+            </ul>
+          </div>
+          <div class="lblock">
+            <div class="lhead">What to Monitor</div>
+            <ul>
+              <li>CTR relative to open rate</li>
+              <li>Profile visits relative to engagement</li>
+              <li>CTA clicks relative to blog engagement depth</li>
+              <li>Whether traffic is assisting consult / trial behavior</li>
+            </ul>
+          </div>
+          <div class="lblock">
+            <div class="lhead">What to Optimize First</div>
+            <ul>
+              <li>Newsletter section hierarchy and CTA structure</li>
+              <li>Social hooks and save/share value</li>
+              <li>Blog CTA placement and internal linking</li>
+              <li>30 / 60 / 90-day review consistency</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- BAND 5: Charts -->
+    <div class="band">
+      <div class="band-title">Performance Charts</div>
+      <div class="band-sub">Automated Chart.</div>
+      <div class="chart-band">
+
+        <div class="chart-box">
+          <h4>Newsletter — Open Rate / CTR / CTOR</h4>
+          <canvas id="chart_nl" height="130"></canvas>
+          <div class="chart-empty" id="chart_nl_empty">Ingresa datos del newsletter para ver la gráfica.</div>
+        </div>
+
+        <div class="chart-box">
+          <h4>Blogs — Engaged Sessions (Jul / Aug / Sep)</h4>
+          <canvas id="chart_blog" height="130"></canvas>
+          <div class="chart-empty" id="chart_blog_empty">Ingresa datos de blogs para ver la gráfica.</div>
+        </div>
+
+        <div class="chart-box">
+          <h4>Social IG — Engagement Rate % (Jul / Aug / Sep)</h4>
+          <canvas id="chart_soc" height="130"></canvas>
+          <div class="chart-empty" id="chart_soc_empty">Ingresa datos de sociales para ver la gráfica.</div>
+        </div>
+
+      </div>
+    </div>
+
+  <div class="footer">
+    <div><span class="brand">804 Strength</span> · Q3 2026 KPI Dashboard</div>
+    <div id="footer_date">Updated: May 27, 2026 · Source: GA4 · GHL · Meta Insights · GBP</div>
+  </div>
+
+</div>
+<script>
+var FIELD_IDS = [
+  'nl_delivered','nl_opens','nl_clicks','nl_unsubs',
+  'jblog_engaged','jblog_total','jblog_cta',
+  'ablog_engaged','ablog_total','ablog_cta',
+  'sblog_engaged','sblog_total','sblog_cta',
+  'jsoc_eng','jsoc_followers',
+  'asoc_eng','asoc_followers',
+  'ssoc_eng','ssoc_followers'
+];
+
+var BASELINE = {
+  nl_delivered:'448', nl_opens:'259', nl_clicks:'76', nl_unsubs:'10',
+  jsoc_followers:'579', asoc_followers:'579', ssoc_followers:'579'
+};
+
+function v(id){ return parseFloat(document.getElementById(id).value) || 0; }
+
+function setHTML(id, html){
+  var el = document.getElementById(id);
+  if (el) el.innerHTML = html;
+}
+
+function chip(label, cls){
+  return '<span class="chip ' + cls + '">' + label + '</span>';
+}
+
+function showAction(id, text, cls){
+  var el = document.getElementById(id);
+  if (!el) return;
+  if (text) {
+    el.textContent = text;
+    el.className = 'dyn-action ' + cls;
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function calculate(){
+  // Newsletter
+  var del = v('nl_delivered');
+  var opens = v('nl_opens');
+  var clicks = v('nl_clicks');
+  var unsubs = v('nl_unsubs');
+
+  if (del > 0) {
+    var or = opens / del * 100;
+    var ctr = clicks / del * 100;
+    var ctor = opens > 0 ? clicks / opens * 100 : 0;
+    var ur = unsubs / del * 100;
+
+    setHTML('nl_calcs',
+      'Open Rate: <strong>' + or.toFixed(1) + '%</strong><br>' +
+      'CTR: <strong>' + ctr.toFixed(1) + '%</strong><br>' +
+      'CTOR: <strong>' + ctor.toFixed(1) + '%</strong><br>' +
+      'Unsub Rate: <strong>' + ur.toFixed(2) + '%</strong>'
+    );
+
+    document.getElementById('snap_delivered').textContent = del;
+    document.getElementById('snap_open_rate').textContent = or.toFixed(1) + '%';
+    document.getElementById('snap_ctr').textContent = ctr.toFixed(1) + '%';
+    document.getElementById('snap_unsubs').textContent = unsubs;
+
+    var nlCls, nlLabel, nlAction, nlActionCls;
+    if (or >= 55) {
+      nlCls = 'green'; nlLabel = 'Green · ' + or.toFixed(1) + '%';
+      if (ctr < 10) {
+        nlAction = 'Green with low CTR: Improve CTA hierarchy and section order — opens are strong but clicks are lagging.';
+      } else {
+        nlAction = 'On track. Repeat subject line pattern.';
+      }
+      nlActionCls = 'g';
+    } else if (or >= 45) {
+      nlCls = 'yellow'; nlLabel = 'Yellow · ' + or.toFixed(1) + '%';
+      nlAction = 'Adjust: Optimize subject line, send timing, or list segmentation before next send.';
+      nlActionCls = 'y';
+    } else {
+      nlCls = 'red'; nlLabel = 'Red · ' + or.toFixed(1) + '%';
+      nlAction = 'Action required: Revise subject line, send timing, and segmentation before next issue.';
+      nlActionCls = 'r';
+    }
+    setHTML('nl_status', chip(nlLabel, nlCls));
+    showAction('nl_action', nlAction, nlActionCls);
+  } else {
+    setHTML('nl_calcs', '');
+    setHTML('nl_status', '');
+    showAction('nl_action', '', '');
+    document.getElementById('snap_delivered').textContent = '448';
+    document.getElementById('snap_open_rate').textContent = '57.9%';
+    document.getElementById('snap_ctr').textContent = '17.0%';
+    document.getElementById('snap_unsubs').textContent = '10';
+  }
+
+  // Blogs: July + August (engaged sessions primary)
+  ['jblog','ablog'].forEach(function(pfx){
+    var eng = v(pfx + '_engaged');
+    var tot = v(pfx + '_total');
+    var cta = v(pfx + '_cta');
+    var ctaRate = tot > 0 ? cta / tot * 100 : 0;
+
+    if (eng > 0) {
+      var html = 'Engaged Sessions: <strong>' + eng + '</strong>';
+      if (ctaRate > 0) html += '<br>CTA Rate: <strong>' + ctaRate.toFixed(2) + '%</strong>';
+      setHTML(pfx + '_calcs', html);
+
+      var sc, sl, sa, sac;
+      if (eng >= 100) {
+        sc = 'green'; sl = 'Green · ' + eng + ' sessions';
+        if (ctaRate > 0 && ctaRate < 1.5) {
+          sa = 'Green, weak CTA: Improve internal CTA placement and link positioning.';
+        } else {
+          sa = 'On track. Topic matched reader intent.';
+        }
+        sac = 'g';
+      } else if (eng >= 60) {
+        sc = 'yellow'; sl = 'Yellow · ' + eng + ' sessions';
+        sa = 'Adjust: Strengthen distribution and title framing for next blog.';
+        sac = 'y';
+      } else {
+        sc = 'red'; sl = 'Red · ' + eng + ' sessions';
+        sa = 'Action required: Revise angle or distribution before publishing next blog.';
+        sac = 'r';
+      }
+      setHTML(pfx + '_status', chip(sl, sc));
+      showAction(pfx + '_action', sa, sac);
+    } else {
+      setHTML(pfx + '_calcs', '');
+      setHTML(pfx + '_status', '');
+      showAction(pfx + '_action', '', '');
+    }
+  });
+
+  // September Blog (CTA rate primary)
+  var seng = v('sblog_engaged');
+  var stot = v('sblog_total');
+  var scta = v('sblog_cta');
+  var sctaR = stot > 0 ? scta / stot * 100 : 0;
+
+  if (stot > 0 || seng > 0) {
+    var sh = '';
+    if (seng > 0) sh += 'Engaged Sessions: <strong>' + seng + '</strong>';
+    if (sctaR > 0) sh += (sh ? '<br>' : '') + 'CTA Rate: <strong>' + sctaR.toFixed(2) + '%</strong>';
+    setHTML('sblog_calcs', sh);
+
+    if (sctaR > 0) {
+      var sc2, sl2, sa2, sac2;
+      if (sctaR >= 3) {
+        sc2 = 'green'; sl2 = 'Green · ' + sctaR.toFixed(2) + '% CTA';
+        sa2 = 'Strong CTA performance. Reinforce this proof-led format in Q4.'; sac2 = 'g';
+      } else if (sctaR >= 1.5) {
+        sc2 = 'yellow'; sl2 = 'Yellow · ' + sctaR.toFixed(2) + '% CTA';
+        sa2 = 'Adjust: Strengthen CTA placement and distribution for better conversion intent.'; sac2 = 'y';
+      } else {
+        sc2 = 'red'; sl2 = 'Red · ' + sctaR.toFixed(2) + '% CTA';
+        sa2 = 'Action required: Revise CTA angle, placement, or distribution strategy.'; sac2 = 'r';
+      }
+      setHTML('sblog_status', chip(sl2, sc2));
+      showAction('sblog_action', sa2, sac2);
+    } else {
+      setHTML('sblog_status', '');
+      showAction('sblog_action', '', '');
+    }
+  } else {
+    setHTML('sblog_calcs', '');
+    setHTML('sblog_status', '');
+    showAction('sblog_action', '', '');
+  }
+
+  // Socials
+  ['jsoc','asoc','ssoc'].forEach(function(pfx){
+    var eng2 = v(pfx + '_eng');
+    var fol = v(pfx + '_followers');
+
+    if (eng2 > 0 && fol > 0) {
+      var er = eng2 / fol * 100;
+      setHTML(pfx + '_calcs', 'IG ER: <strong>' + er.toFixed(2) + '%</strong>');
+
+      var sc3, sl3, sa3, sac3;
+      if (er >= 4) {
+        sc3 = 'green'; sl3 = 'Green · ' + er.toFixed(2) + '% ER';
+        sa3 = 'Content is resonating. Repeat this theme and creative format.'; sac3 = 'g';
+      } else if (er >= 2.5) {
+        sc3 = 'yellow'; sl3 = 'Yellow · ' + er.toFixed(2) + '% ER';
+        sa3 = 'Adjust: Improve hook quality and CTA clarity in next posts.'; sac3 = 'y';
+      } else {
+        sc3 = 'red'; sl3 = 'Red · ' + er.toFixed(2) + '% ER';
+        sa3 = 'Action required: Change content angle, creative format, or posting logic.'; sac3 = 'r';
+      }
+      setHTML(pfx + '_status', chip(sl3, sc3));
+      showAction(pfx + '_action', sa3, sac3);
+    } else {
+      setHTML(pfx + '_calcs', '');
+      setHTML(pfx + '_status', '');
+      showAction(pfx + '_action', '', '');
+    }
+  });
+
+  drawCharts();
+}
+
+function drawCharts(){
+  // Newsletter: OR / CTR / CTOR as 3 bars
+  var del = v('nl_delivered'), opens = v('nl_opens'), clicks = v('nl_clicks');
+  var nlEmpty = document.getElementById('chart_nl_empty');
+  var nlCanvas = document.getElementById('chart_nl');
+  if(del > 0){
+    var or = opens/del*100, ctr = clicks/del*100, ctor = opens>0 ? clicks/opens*100 : 0;
+    nlEmpty.style.display = 'none';
+    nlCanvas.style.display = 'block';
+    drawBar(nlCanvas,
+      [or, ctr, ctor],
+      ['Open Rate','CTR','CTOR'],
+      ['%','%','%'],
+      [55,10,20],
+      [45,5,12]
+    );
+  } else {
+    nlEmpty.style.display = 'block';
+    nlCanvas.style.display = 'none';
+  }
+
+  // Blog: engaged sessions Jul / Aug / Sep
+  var jEng = v('jblog_engaged'), aEng = v('ablog_engaged'), sEng = v('sblog_engaged');
+  var blogEmpty = document.getElementById('chart_blog_empty');
+  var blogCanvas = document.getElementById('chart_blog');
+  if(jEng > 0 || aEng > 0 || sEng > 0){
+    blogEmpty.style.display = 'none';
+    blogCanvas.style.display = 'block';
+    drawBar(blogCanvas,
+      [jEng, aEng, sEng],
+      ['Julio','Agosto','Sep'],
+      ['','',''],
+      [100,100,100],
+      [60,60,60]
+    );
+  } else {
+    blogEmpty.style.display = 'block';
+    blogCanvas.style.display = 'none';
+  }
+
+  // Social: IG ER Jul / Aug / Sep
+  var jF = v('jsoc_followers')||579, aF = v('asoc_followers')||579, sF = v('ssoc_followers')||579;
+  var jER = v('jsoc_eng')>0 ? v('jsoc_eng')/jF*100 : 0;
+  var aER = v('asoc_eng')>0 ? v('asoc_eng')/aF*100 : 0;
+  var sER = v('ssoc_eng')>0 ? v('ssoc_eng')/sF*100 : 0;
+  var socEmpty = document.getElementById('chart_soc_empty');
+  var socCanvas = document.getElementById('chart_soc');
+  if(jER > 0 || aER > 0 || sER > 0){
+    socEmpty.style.display = 'none';
+    socCanvas.style.display = 'block';
+    drawBar(socCanvas,
+      [jER, aER, sER],
+      ['Julio','Agosto','Sep'],
+      ['%','%','%'],
+      [4,4,4],
+      [2.5,2.5,2.5]
+    );
+  } else {
+    socEmpty.style.display = 'block';
+    socCanvas.style.display = 'none';
+  }
+}
+
+function drawBar(canvas, data, labels, units, greenThrs, yellowThrs){
+  var W = canvas.parentElement.clientWidth - 26;
+  var H = 130;
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+
+  var n = data.length;
+  var padL=10, padR=10, padT=22, padB=20;
+  var chartW = W - padL - padR;
+  var chartH = H - padT - padB;
+  var maxVal = Math.max.apply(null, data.concat(greenThrs).concat([1]));
+
+  var barW = Math.floor(chartW / (n*2));
+  var gap = n > 1 ? (chartW - barW*n) / (n-1) : 0;
+
+  // grid lines
+  ctx.strokeStyle = '#f0f1f3';
+  ctx.lineWidth = 1;
+  for(var g=1; g<=4; g++){
+    var gy = padT + chartH - (g/4)*chartH;
+    ctx.beginPath(); ctx.moveTo(padL,gy); ctx.lineTo(W-padR,gy); ctx.stroke();
+  }
+
+  data.forEach(function(val,i){
+    var green = greenThrs[i], yellow = yellowThrs[i];
+    var barH = val > 0 ? Math.max(2, Math.round((val/maxVal)*chartH)) : 0;
+    var x = padL + i*(barW+gap);
+    var y = padT + chartH - barH;
+
+    // threshold line for this bar
+    if(green > 0){
+      var tY = padT + chartH - (green/maxVal)*chartH;
+      ctx.save();
+      ctx.strokeStyle = '#b9dcbd';
+      ctx.setLineDash([3,2]);
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x-2,tY); ctx.lineTo(x+barW+2,tY); ctx.stroke();
+      ctx.restore();
+    }
+
+    // bar color
+    var color = '#e0e0e0';
+    if(val > 0){
+      if(val >= green) color = '#1d6b2a';
+      else if(val >= yellow) color = '#b8860b';
+      else color = '#8a1f1f';
+    }
+    ctx.fillStyle = color;
+    if(barH > 0) ctx.fillRect(x, y, barW, barH);
+
+    // value label above bar
+    if(val > 0){
+      ctx.fillStyle = '#1a1a1a';
+      ctx.font = 'bold 9px Arial';
+      ctx.textAlign = 'center';
+      var str = val.toFixed(1) + (units[i]||'');
+      ctx.fillText(str, x+barW/2, Math.max(padT+10, y-4));
+    }
+
+    // x label
+    ctx.fillStyle = '#6b6f76';
+    ctx.font = '8px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(labels[i], x+barW/2, H-4);
+  });
+}
+
+function saveDashboard(btn){
+  var data = {};
+  FIELD_IDS.forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) data[id] = el.value;
+  });
+  localStorage.setItem('804_dash_v1', JSON.stringify(data));
+
+  var now = new Date();
+  var ds = now.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+  document.getElementById('footer_date').textContent = 'Saved: ' + ds + ' · Source: GA4 · GHL · Meta Insights · GBP';
+
+  var orig = btn.textContent;
+  btn.textContent = 'Saved';
+  btn.style.cssText = 'background:#1d6b2a;color:#fff;border-color:#1d6b2a';
+  setTimeout(function(){
+    btn.textContent = orig;
+    btn.style.cssText = '';
+  }, 1600);
+}
+
+function resetDashboard(){
+  if (!confirm('Clear all entered values?')) return;
+  FIELD_IDS.forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  localStorage.removeItem('804_dash_v1');
+  calculate();
+}
+
+function restoreDefaults(){
+  FIELD_IDS.forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.value = BASELINE[id] || '';
+  });
+  calculate();
+}
+
+function loadSaved(){
+  var raw = localStorage.getItem('804_dash_v1');
+  if (!raw) return;
+  try {
+    var data = JSON.parse(raw);
+    FIELD_IDS.forEach(function(id){
+      if (data[id] !== undefined) {
+        var el = document.getElementById(id);
+        if (el) el.value = data[id];
+      }
+    });
+    calculate();
+  } catch(e){}
+}
+
+document.addEventListener('DOMContentLoaded', loadSaved);
+window.addEventListener('resize', drawCharts);
+</script>
+</body>
+</html>
