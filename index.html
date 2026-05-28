@@ -35,8 +35,6 @@ button,input,textarea{font:inherit}
 .card{background:#fff;border:1px solid #e2e8f0;border-radius:22px;padding:20px;box-shadow:0 24px 48px rgba(15,23,42,.05)}
 .card h3{font-size:.92rem;font-weight:700;color:#0f172a;margin-bottom:10px}
 .card p{color:#475569;font-size:.95rem;line-height:1.65}
-.card .value{font-size:2rem;font-weight:800;color:#111827;margin:14px 0 6px}
-.card .label{font-size:.82rem;text-transform:uppercase;color:#64748b;letter-spacing:.08em;font-weight:700}
 .kpi-list{display:grid;gap:12px;margin-top:12px}
 .kpi-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:14px}
 .kpi-item strong{display:block;font-size:1rem;color:#111827}
@@ -49,7 +47,8 @@ button,input,textarea{font:inherit}
 .metric-field label{font-size:.78rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.04em}
 .metric-field input,.metric-field textarea{padding:11px 14px;border:1px solid #cbd5e1;border-radius:14px;background:#f8fafc;color:#0f172a}
 .metric-field textarea{min-height:100px;resize:vertical}
-.chart-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.field-help{font-size:.78rem;color:#64748b;line-height:1.4;margin-top:4px}
+.chart-band{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .chart-card{padding:18px;background:#fff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 24px 48px rgba(15,23,42,.05)}
 .chart-card h4{font-size:1rem;font-weight:700;color:#0f172a;margin-bottom:14px}
 .chart-box{position:relative}
@@ -93,7 +92,7 @@ button,input,textarea{font:inherit}
       <div class="section-header">
         <div>
           <h2>Q3 Overview</h2>
-          <p>High-level quarterly summary with newsletter performance, channel comparisons, traffic momentum, and executive KPI context.</p>
+          <p>Quarterly dashboard with newsletter analytics, monthly comparisons, performance evolution, and executive KPI summaries.</p>
         </div>
         <div class="section-actions">
           <button onclick="saveDashboard(this)">Save</button>
@@ -102,7 +101,7 @@ button,input,textarea{font:inherit}
         </div>
       </div>
 
-      <div class="grid-4 summary-grid">
+      <div class="summary-grid">
         <div class="summary-tile">
           <h3>Newsletter Performance</h3>
           <div class="summary-row">
@@ -111,34 +110,52 @@ button,input,textarea{font:inherit}
           </div>
           <div class="summary-row" style="margin-top:14px;">
             <div class="summary-stat"><strong id="summary_delivered">448</strong><span>Delivered</span></div>
-            <div class="summary-stat"><strong id="summary_unsubs">10</strong><span>Unsubs</span></div>
+            <div class="summary-stat"><strong id="summary_unsubs">10</strong><span>Unsub Rate</span></div>
           </div>
         </div>
         <div class="summary-tile">
-          <h3>Trend Highlights</h3>
+          <h3>Quarterly Channel Summary</h3>
           <div class="kpi-list" style="margin-top:16px;">
-            <div class="kpi-item"><strong>Newsletter trend</strong><span>Open rate target is 55%+ for high engagement.</span></div>
-            <div class="kpi-item"><strong>Blog authority</strong><span>Engaged sessions above 100 signal healthy content resonance.</span></div>
-            <div class="kpi-item"><strong>Social reach</strong><span>Maintain 4%+ engagement rate while scaling audience.</span></div>
+            <div class="kpi-item"><strong>Social</strong><span>Track engagement rate, follower growth, and content reach per month.</span></div>
+            <div class="kpi-item"><strong>Website</strong><span>Compare sessions, engagement, conversions and average session duration.</span></div>
+            <div class="kpi-item"><strong>Blog</strong><span>Evaluate content resonance with engaged sessions and CTA performance.</span></div>
           </div>
         </div>
         <div class="summary-tile">
-          <h3>Quarterly Growth</h3>
+          <h3>Growth Trends</h3>
           <div class="kpi-list" style="margin-top:16px;">
-            <div class="kpi-item"><strong>Traffic outlook</strong><span>Monitor month-over-month lift in website engagement.</span></div>
-            <div class="kpi-item"><strong>Campaign impact</strong><span>Track lead volume and cost efficiency each month.</span></div>
-            <div class="kpi-item"><strong>Executive focus</strong><span>Prioritize newsletter quality, blog CTA depth, and social proof.</span></div>
+            <div class="kpi-item"><strong>Traffic momentum</strong><span>Measure month-over-month session growth for the quarter.</span></div>
+            <div class="kpi-item"><strong>Performance evolution</strong><span>Compare social and blog progress across July, August, and September.</span></div>
+            <div class="kpi-item"><strong>Campaign signal</strong><span>Monitor lead volume and spend efficiency each month.</span></div>
           </div>
         </div>
         <div class="summary-tile">
-          <h3>Quarterly KPI Summary</h3>
+          <h3>Executive KPI Summary</h3>
           <div class="summary-row">
-            <div class="summary-stat"><strong>4</strong><span>Monthly Scorecards</span></div>
-            <div class="summary-stat"><strong>3</strong><span>Key channels</span></div>
+            <div class="summary-stat"><strong>4</strong><span>Monthly scorecards</span></div>
+            <div class="summary-stat"><strong>3</strong><span>Core marketing channels</span></div>
           </div>
           <div class="summary-row" style="margin-top:14px;">
-            <div class="summary-stat"><strong>1</strong><span>Quarterly view</span></div>
-            <div class="summary-stat"><strong>100%</strong><span>Update-ready</span></div>
+            <div class="summary-stat"><strong>1</strong><span>Quarterly overview</span></div>
+            <div class="summary-stat"><strong>100%</strong><span>Update-ready dashboard</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="metric-box">
+          <h4>Newsletter Analytics</h4>
+          <div class="metric-grid">
+            <div class="metric-field"><label>Delivered</label><input type="number" id="nl_delivered" min="0" placeholder="Total sends" oninput="calculate()"><small class="field-help">Enter total emails delivered across the quarter.</small></div>
+            <div class="metric-field"><label>Opens</label><input type="number" id="nl_opens" min="0" placeholder="Total opens" oninput="calculate()"><small class="field-help">Enter total email opens.</small></div>
+            <div class="metric-field"><label>Clicks</label><input type="number" id="nl_clicks" min="0" placeholder="Total clicks" oninput="calculate()"><small class="field-help">Enter total clicks from newsletter CTAs.</small></div>
+            <div class="metric-field"><label>Unsubscribes</label><input type="number" id="nl_unsubs" min="0" placeholder="Total unsubscribes" oninput="calculate()"><small class="field-help">Enter the number of unsubscribe actions.</small></div>
+          </div>
+        </div>
+        <div class="metric-box">
+          <h4>Quarterly Notes</h4>
+          <div class="metric-grid">
+            <div class="metric-field" style="grid-column:1 / -1"><label>Newsletter summary</label><textarea id="overview_notes" placeholder="Capture key newsletter learnings for Q3"></textarea><small class="field-help">Add a quick executive note for newsletter strategy and results.</small></div>
           </div>
         </div>
       </div>
@@ -148,21 +165,28 @@ button,input,textarea{font:inherit}
           <h4>Newsletter: Open Rate / CTR / CTOR</h4>
           <div class="chart-box">
             <canvas id="chart_nl" height="220"></canvas>
-            <div class="chart-empty" id="chart_nl_empty">Enter newsletter data in any month to view the trend.</div>
+            <div class="chart-empty" id="chart_nl_empty">Enter newsletter metrics to display the performance chart.</div>
           </div>
         </div>
         <div class="chart-card">
-          <h4>Blogs: Engaged Sessions</h4>
+          <h4>Blogs: Engaged Sessions by Month</h4>
           <div class="chart-box">
             <canvas id="chart_blog" height="220"></canvas>
-            <div class="chart-empty" id="chart_blog_empty">Enter blog data to populate the chart.</div>
+            <div class="chart-empty" id="chart_blog_empty">Enter blog engagement values for each month to view comparison.</div>
           </div>
         </div>
         <div class="chart-card">
-          <h4>Social Media: Engagement Rate</h4>
+          <h4>Social: Engagement Rate by Month</h4>
           <div class="chart-box">
             <canvas id="chart_soc" height="220"></canvas>
-            <div class="chart-empty" id="chart_soc_empty">Enter social metrics to see the quarter comparison.</div>
+            <div class="chart-empty" id="chart_soc_empty">Enter monthly social metrics to compare engagement performance.</div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h4>Website Sessions by Month</h4>
+          <div class="chart-box">
+            <canvas id="chart_web" height="220"></canvas>
+            <div class="chart-empty" id="chart_web_empty">Enter monthly website sessions to show traffic growth.</div>
           </div>
         </div>
       </div>
@@ -172,55 +196,53 @@ button,input,textarea{font:inherit}
       <div class="section-header">
         <div>
           <h2>July</h2>
-          <p>Monthly marketing summary with space for blog, website, social, campaign, and KPI details.</p>
+          <p>One-month marketing performance snapshot organized by channel and KPI category.</p>
         </div>
-        <div class="badge">Editable marketing inputs</div>
+        <div class="badge">July channel metrics</div>
       </div>
 
       <div class="grid-2">
-        <div class="card">
-          <h3>July Marketing Snapshot</h3>
-          <p>Use this month page to track content performance, traffic, and campaign outcomes in one place.</p>
-          <div class="kpi-list" style="margin-top:16px;">
-            <div class="kpi-item"><strong>Blog engagement</strong><span>Record engaged sessions and CTA impact.</span></div>
-            <div class="kpi-item"><strong>Website performance</strong><span>Track sessions, time on page, and conversion signals.</span></div>
-            <div class="kpi-item"><strong>Social momentum</strong><span>Measure engagement, saves, shares, and profile actions.</span></div>
+        <div class="metric-box">
+          <h4>Social Media Performance</h4>
+          <div class="metric-grid">
+            <div class="metric-field"><label>Current followers</label><input type="number" id="jsoc_followers" min="0" placeholder="Total followers" oninput="calculate()"><small class="field-help">Total audience size at the end of July.</small></div>
+            <div class="metric-field"><label>Followers gained</label><input type="number" id="jsoc_growth" min="0" placeholder="New followers" oninput="calculate()"><small class="field-help">New followers added during July.</small></div>
+            <div class="metric-field"><label>Engagement rate</label><input type="number" id="jsoc_er" min="0" placeholder="% engagement" oninput="calculate()"><small class="field-help">Percentage of audience interactions.</small></div>
+            <div class="metric-field"><label>Reach / impressions</label><input type="number" id="jsoc_reach" min="0" placeholder="Reach/impressions" oninput="calculate()"><small class="field-help">Total audience reach or impressions.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Additional KPI</label><input type="text" id="jsoc_extra" placeholder="e.g. saves/shares" oninput="calculate()"><small class="field-help">Optional secondary KPI for July social.</small></div>
           </div>
         </div>
-        <div class="card">
-          <h3>July Monthly Scorecard</h3>
+        <div class="metric-box">
+          <h4>Website / Google Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Newsletter delivered</label><input type="number" id="nl_delivered" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Newsletter opens</label><input type="number" id="nl_opens" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Newsletter clicks</label><input type="number" id="nl_clicks" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>News unsubscribes</label><input type="number" id="nl_unsubs" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog engaged sessions</label><input type="number" id="jblog_engaged" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog total sessions</label><input type="number" id="jblog_total" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog CTA clicks</label><input type="number" id="jblog_cta" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Social engagements</label><input type="number" id="jsoc_eng" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Social followers</label><input type="number" id="jsoc_followers" min="0" placeholder="579" oninput="calculate()"></div>
+            <div class="metric-field"><label>Sessions</label><input type="number" id="jweb_sessions" min="0" placeholder="Total sessions" oninput="calculate()"><small class="field-help">Website sessions recorded in July.</small></div>
+            <div class="metric-field"><label>Users</label><input type="number" id="jweb_users" min="0" placeholder="Unique users" oninput="calculate()"><small class="field-help">Unique visitors over the month.</small></div>
+            <div class="metric-field"><label>Engagement rate</label><input type="number" id="jweb_engagement" min="0" placeholder="% engagement" oninput="calculate()"><small class="field-help">Site engagement percentage.</small></div>
+            <div class="metric-field"><label>Goal completions</label><input type="number" id="jweb_goals" min="0" placeholder="Goal completions" oninput="calculate()"><small class="field-help">Conversion or goal events.</small></div>
+            <div class="metric-field"><label>Avg session duration</label><input type="text" id="jweb_duration" placeholder="e.g. 2m 35s" oninput="calculate()"><small class="field-help">Average time spent on the site.</small></div>
           </div>
         </div>
       </div>
 
-      <div class="metric-panel" style="margin-top:18px;">
+      <div class="grid-2" style="margin-top:18px;">
         <div class="metric-box">
-          <h4>Website Performance</h4>
+          <h4>Blog Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Sessions</label><input type="number" id="jweb_sessions" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Engagement %</label><input type="number" id="jweb_engagement" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Goal completions</label><input type="number" id="jweb_goals" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Average duration</label><input type="text" id="jweb_duration" placeholder="e.g. 2m 35s"></div>
+            <div class="metric-field"><label>Engaged sessions</label><input type="number" id="jblog_engaged" min="0" placeholder="Engaged sessions" oninput="calculate()"><small class="field-help">Visitors who spent time reading the blog.</small></div>
+            <div class="metric-field"><label>Total sessions</label><input type="number" id="jblog_total" min="0" placeholder="Total blog sessions" oninput="calculate()"><small class="field-help">Total traffic to the blog page.</small></div>
+            <div class="metric-field"><label>CTA clicks</label><input type="number" id="jblog_cta" min="0" placeholder="CTA clicks" oninput="calculate()"><small class="field-help">Calls to action clicked from the blog.</small></div>
+            <div class="metric-field"><label>Shares / comments</label><input type="text" id="jblog_shares" placeholder="e.g. shares or comments" oninput="calculate()"><small class="field-help">Optional social proof or engagement detail.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Blog note</label><textarea id="jblog_note" placeholder="Summary of blog performance"></textarea><small class="field-help">Add context for July blog results.</small></div>
           </div>
         </div>
         <div class="metric-box">
-          <h4>Campaign & KPI Notes</h4>
+          <h4>Campaign Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Campaign spend</label><input type="number" id="jcamp_spend" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>New leads</label><input type="number" id="jcamp_leads" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Landing page ROI</label><input type="text" id="jcamp_roi" placeholder="e.g. 3.4x"></div>
-            <div class="metric-field"><label>Other KPI</label><input type="text" id="jother_kpi1" placeholder="Custom KPI"></div>
-            <div class="metric-field" style="grid-column:1 / -1"><label>Quick summary</label><textarea id="jother_notes" placeholder="Write monthly observations or team notes"></textarea></div>
+            <div class="metric-field"><label>Ad spend</label><input type="number" id="jcamp_spend" min="0" placeholder="Spend" oninput="calculate()"><small class="field-help">Total campaign investment.</small></div>
+            <div class="metric-field"><label>Leads</label><input type="number" id="jcamp_leads" min="0" placeholder="Leads" oninput="calculate()"><small class="field-help">New leads captured in July.</small></div>
+            <div class="metric-field"><label>ROI / ROAS</label><input type="text" id="jcamp_roi" placeholder="e.g. 3.2x" oninput="calculate()"><small class="field-help">Return on ad spend or ROI estimate.</small></div>
+            <div class="metric-field"><label>CPA</label><input type="text" id="jcamp_cpa" placeholder="e.g. $32" oninput="calculate()"><small class="field-help">Cost per acquisition or lead.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Campaign note</label><textarea id="jcamp_note" placeholder="Campaign observations"></textarea><small class="field-help">Add key takeaways or next-step actions.</small></div>
           </div>
         </div>
       </div>
@@ -230,50 +252,53 @@ button,input,textarea{font:inherit}
       <div class="section-header">
         <div>
           <h2>August</h2>
-          <p>Track mid-quarter performance with content, site metrics, audience engagement, and campaign signal quality.</p>
+          <p>Mid-quarter month view with channel-level KPI sections for a tidy update experience.</p>
         </div>
-        <div class="badge">Editable marketing inputs</div>
+        <div class="badge">August channel metrics</div>
       </div>
 
       <div class="grid-2">
-        <div class="card">
-          <h3>August Focus Areas</h3>
-          <div class="kpi-list" style="margin-top:16px;">
-            <div class="kpi-item"><strong>Content</strong><span>Sustain momentum with blog and newsletter continuity.</span></div>
-            <div class="kpi-item"><strong>Audience</strong><span>Increase meaningful social interactions and website actions.</span></div>
-            <div class="kpi-item"><strong>Conversion</strong><span>Track qualified leads from campaigns and organic sources.</span></div>
+        <div class="metric-box">
+          <h4>Social Media Performance</h4>
+          <div class="metric-grid">
+            <div class="metric-field"><label>Current followers</label><input type="number" id="asoc_followers" min="0" placeholder="Total followers" oninput="calculate()"><small class="field-help">Current social audience size.</small></div>
+            <div class="metric-field"><label>Followers gained</label><input type="number" id="asoc_growth" min="0" placeholder="New followers" oninput="calculate()"><small class="field-help">Net follower lift during August.</small></div>
+            <div class="metric-field"><label>Engagement rate</label><input type="number" id="asoc_er" min="0" placeholder="% engagement" oninput="calculate()"><small class="field-help">Total engagement ratio across posts.</small></div>
+            <div class="metric-field"><label>Reach / impressions</label><input type="number" id="asoc_reach" min="0" placeholder="Reach/impressions" oninput="calculate()"><small class="field-help">Total social reach or impressions.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Additional KPI</label><input type="text" id="asoc_extra" placeholder="e.g. saves/shares" oninput="calculate()"><small class="field-help">Optional secondary performance indicator.</small></div>
           </div>
         </div>
-        <div class="card">
-          <h3>August Monthly Inputs</h3>
+        <div class="metric-box">
+          <h4>Website / Google Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Blog engaged sessions</label><input type="number" id="ablog_engaged" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog total sessions</label><input type="number" id="ablog_total" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog CTA clicks</label><input type="number" id="ablog_cta" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Social engagements</label><input type="number" id="asoc_eng" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Social followers</label><input type="number" id="asoc_followers" min="0" placeholder="579" oninput="calculate()"></div>
+            <div class="metric-field"><label>Sessions</label><input type="number" id="aweb_sessions" min="0" placeholder="Total sessions" oninput="calculate()"><small class="field-help">Total website sessions during August.</small></div>
+            <div class="metric-field"><label>Users</label><input type="number" id="aweb_users" min="0" placeholder="Unique users" oninput="calculate()"><small class="field-help">Unique visitors from Google and organic sources.</small></div>
+            <div class="metric-field"><label>Engagement rate</label><input type="number" id="aweb_engagement" min="0" placeholder="% engagement" oninput="calculate()"><small class="field-help">Share of sessions that were engaged.</small></div>
+            <div class="metric-field"><label>Goal completions</label><input type="number" id="aweb_goals" min="0" placeholder="Goal completions" oninput="calculate()"><small class="field-help">Lead or conversion actions completed.</small></div>
+            <div class="metric-field"><label>Avg session duration</label><input type="text" id="aweb_duration" placeholder="e.g. 2m 12s" oninput="calculate()"><small class="field-help">Average session time for August.</small></div>
           </div>
         </div>
       </div>
 
-      <div class="metric-panel" style="margin-top:18px;">
+      <div class="grid-2" style="margin-top:18px;">
         <div class="metric-box">
-          <h4>Website & Performance</h4>
+          <h4>Blog Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Sessions</label><input type="number" id="aweb_sessions" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Engagement %</label><input type="number" id="aweb_engagement" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Goal completions</label><input type="number" id="aweb_goals" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Average duration</label><input type="text" id="aweb_duration" placeholder="e.g. 2m 12s"></div>
+            <div class="metric-field"><label>Engaged sessions</label><input type="number" id="ablog_engaged" min="0" placeholder="Engaged sessions" oninput="calculate()"><small class="field-help">Visitors who spent quality time on blog content.</small></div>
+            <div class="metric-field"><label>Total sessions</label><input type="number" id="ablog_total" min="0" placeholder="Total blog sessions" oninput="calculate()"><small class="field-help">Overall visits to the blog asset.</small></div>
+            <div class="metric-field"><label>CTA clicks</label><input type="number" id="ablog_cta" min="0" placeholder="CTA clicks" oninput="calculate()"><small class="field-help">Clicks on blog calls to action.</small></div>
+            <div class="metric-field"><label>Shares / comments</label><input type="text" id="ablog_shares" placeholder="e.g. shares or comments" oninput="calculate()"><small class="field-help">Optional engagement detail for blog distribution.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Blog note</label><textarea id="ablog_note" placeholder="Summary of blog performance"></textarea><small class="field-help">Add commentary or important observations.</small></div>
           </div>
         </div>
         <div class="metric-box">
-          <h4>Campaign & KPI Notes</h4>
+          <h4>Campaign Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Campaign spend</label><input type="number" id="acamp_spend" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>New leads</label><input type="number" id="acamp_leads" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Landing page ROI</label><input type="text" id="acamp_roi" placeholder="e.g. 3.4x"></div>
-            <div class="metric-field"><label>Other KPI</label><input type="text" id="aother_kpi1" placeholder="Custom KPI"></div>
-            <div class="metric-field" style="grid-column:1 / -1"><label>Quick summary</label><textarea id="aother_notes" placeholder="Write monthly observations or team notes"></textarea></div>
+            <div class="metric-field"><label>Ad spend</label><input type="number" id="acamp_spend" min="0" placeholder="Spend" oninput="calculate()"><small class="field-help">Total investment for August campaigns.</small></div>
+            <div class="metric-field"><label>Leads</label><input type="number" id="acamp_leads" min="0" placeholder="Leads" oninput="calculate()"><small class="field-help">Qualified leads acquired.</small></div>
+            <div class="metric-field"><label>ROI / ROAS</label><input type="text" id="acamp_roi" placeholder="e.g. 3.2x" oninput="calculate()"><small class="field-help">Return on advertising spend or value.</small></div>
+            <div class="metric-field"><label>CPA</label><input type="text" id="acamp_cpa" placeholder="e.g. $32" oninput="calculate()"><small class="field-help">Cost per acquisition or lead.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Campaign note</label><textarea id="acamp_note" placeholder="Campaign observations"></textarea><small class="field-help">Summarize what worked and what needs adjustment.</small></div>
           </div>
         </div>
       </div>
@@ -283,50 +308,53 @@ button,input,textarea{font:inherit}
       <div class="section-header">
         <div>
           <h2>September</h2>
-          <p>Final monthly performance page with campaign calibration, audience growth, and content outcomes for the quarter close.</p>
+          <p>Final month of the quarter with clear channel breakdowns for growth and campaign review.</p>
         </div>
-        <div class="badge">Editable marketing inputs</div>
+        <div class="badge">September channel metrics</div>
       </div>
 
       <div class="grid-2">
-        <div class="card">
-          <h3>September Performance Themes</h3>
-          <div class="kpi-list" style="margin-top:16px;">
-            <div class="kpi-item"><strong>Proof and trust</strong><span>Focus on community proof, conversions, and stronger CTA clarity.</span></div>
-            <div class="kpi-item"><strong>Acquisition</strong><span>Track which channels delivered new prospects and interest.</span></div>
-            <div class="kpi-item"><strong>Retention</strong><span>Monitor list activity and audience quality for quarter-end follow-up.</span></div>
+        <div class="metric-box">
+          <h4>Social Media Performance</h4>
+          <div class="metric-grid">
+            <div class="metric-field"><label>Current followers</label><input type="number" id="ssoc_followers" min="0" placeholder="Total followers" oninput="calculate()"><small class="field-help">Audience size at the end of September.</small></div>
+            <div class="metric-field"><label>Followers gained</label><input type="number" id="ssoc_growth" min="0" placeholder="New followers" oninput="calculate()"><small class="field-help">Follower increase for September.</small></div>
+            <div class="metric-field"><label>Engagement rate</label><input type="number" id="ssoc_er" min="0" placeholder="% engagement" oninput="calculate()"><small class="field-help">Engagement rate for the month.</small></div>
+            <div class="metric-field"><label>Reach / impressions</label><input type="number" id="ssoc_reach" min="0" placeholder="Reach/impressions" oninput="calculate()"><small class="field-help">Total impressions or reach delivered.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Additional KPI</label><input type="text" id="ssoc_extra" placeholder="e.g. saves/shares" oninput="calculate()"><small class="field-help">Optional secondary social KPI.</small></div>
           </div>
         </div>
-        <div class="card">
-          <h3>September Monthly Inputs</h3>
+        <div class="metric-box">
+          <h4>Website / Google Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Blog engaged sessions</label><input type="number" id="sblog_engaged" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog total sessions</label><input type="number" id="sblog_total" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Blog CTA clicks</label><input type="number" id="sblog_cta" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Social engagements</label><input type="number" id="ssoc_eng" min="0" placeholder="0" oninput="calculate()"></div>
-            <div class="metric-field"><label>Social followers</label><input type="number" id="ssoc_followers" min="0" placeholder="579" oninput="calculate()"></div>
+            <div class="metric-field"><label>Sessions</label><input type="number" id="sweb_sessions" min="0" placeholder="Total sessions" oninput="calculate()"><small class="field-help">Website sessions during September.</small></div>
+            <div class="metric-field"><label>Users</label><input type="number" id="sweb_users" min="0" placeholder="Unique users" oninput="calculate()"><small class="field-help">Unique visitors to the site.</small></div>
+            <div class="metric-field"><label>Engagement rate</label><input type="number" id="sweb_engagement" min="0" placeholder="% engagement" oninput="calculate()"><small class="field-help">Percentage of engaged website sessions.</small></div>
+            <div class="metric-field"><label>Goal completions</label><input type="number" id="sweb_goals" min="0" placeholder="Goal completions" oninput="calculate()"><small class="field-help">Conversions or goal completions.</small></div>
+            <div class="metric-field"><label>Avg session duration</label><input type="text" id="sweb_duration" placeholder="e.g. 2m 50s" oninput="calculate()"><small class="field-help">Average time on site for sessions.</small></div>
           </div>
         </div>
       </div>
 
-      <div class="metric-panel" style="margin-top:18px;">
+      <div class="grid-2" style="margin-top:18px;">
         <div class="metric-box">
-          <h4>Website & Performance</h4>
+          <h4>Blog Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Sessions</label><input type="number" id="sweb_sessions" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Engagement %</label><input type="number" id="sweb_engagement" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Goal completions</label><input type="number" id="sweb_goals" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Average duration</label><input type="text" id="sweb_duration" placeholder="e.g. 2m 50s"></div>
+            <div class="metric-field"><label>Engaged sessions</label><input type="number" id="sblog_engaged" min="0" placeholder="Engaged sessions" oninput="calculate()"><small class="field-help">Quality blog traffic for September.</small></div>
+            <div class="metric-field"><label>Total sessions</label><input type="number" id="sblog_total" min="0" placeholder="Total blog sessions" oninput="calculate()"><small class="field-help">Overall blog page visits.</small></div>
+            <div class="metric-field"><label>CTA clicks</label><input type="number" id="sblog_cta" min="0" placeholder="CTA clicks" oninput="calculate()"><small class="field-help">Calls to action clicked from the blog.</small></div>
+            <div class="metric-field"><label>Shares / comments</label><input type="text" id="sblog_shares" placeholder="e.g. shares or comments" oninput="calculate()"><small class="field-help">Optional community engagement detail.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Blog note</label><textarea id="sblog_note" placeholder="Summary of blog performance"></textarea><small class="field-help">Add any observations for September blog performance.</small></div>
           </div>
         </div>
         <div class="metric-box">
-          <h4>Campaign & KPI Notes</h4>
+          <h4>Campaign Performance</h4>
           <div class="metric-grid">
-            <div class="metric-field"><label>Campaign spend</label><input type="number" id="scamp_spend" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>New leads</label><input type="number" id="scamp_leads" min="0" placeholder="0"></div>
-            <div class="metric-field"><label>Landing page ROI</label><input type="text" id="scamp_roi" placeholder="e.g. 3.4x"></div>
-            <div class="metric-field"><label>Other KPI</label><input type="text" id="sother_kpi1" placeholder="Custom KPI"></div>
-            <div class="metric-field" style="grid-column:1 / -1"><label>Quick summary</label><textarea id="sother_notes" placeholder="Write monthly observations or team notes"></textarea></div>
+            <div class="metric-field"><label>Ad spend</label><input type="number" id="scamp_spend" min="0" placeholder="Spend" oninput="calculate()"><small class="field-help">Total campaign investment for September.</small></div>
+            <div class="metric-field"><label>Leads</label><input type="number" id="scamp_leads" min="0" placeholder="Leads" oninput="calculate()"><small class="field-help">Qualified leads acquired this month.</small></div>
+            <div class="metric-field"><label>ROI / ROAS</label><input type="text" id="scamp_roi" placeholder="e.g. 3.2x" oninput="calculate()"><small class="field-help">Return on ad spend or ROI estimate.</small></div>
+            <div class="metric-field"><label>CPA</label><input type="text" id="scamp_cpa" placeholder="e.g. $32" oninput="calculate()"><small class="field-help">Cost per acquisition or lead.</small></div>
+            <div class="metric-field" style="grid-column:1 / -1"><label>Campaign note</label><textarea id="scamp_note" placeholder="Campaign observations"></textarea><small class="field-help">Capture the main campaign takeaway.</small></div>
           </div>
         </div>
       </div>
@@ -338,18 +366,19 @@ button,input,textarea{font:inherit}
 </div>
 <script>
 var FIELD_IDS = [
-  'nl_delivered','nl_opens','nl_clicks','nl_unsubs',
-  'jblog_engaged','jblog_total','jblog_cta',
-  'ablog_engaged','ablog_total','ablog_cta',
-  'sblog_engaged','sblog_total','sblog_cta',
-  'jsoc_eng','jsoc_followers',
-  'asoc_eng','asoc_followers',
-  'ssoc_eng','ssoc_followers'
+  'nl_delivered','nl_opens','nl_clicks','nl_unsubs','overview_notes',
+  'jweb_sessions','jweb_users','jweb_engagement','jweb_goals','jweb_duration','jweb_duration',
+  'jblog_engaged','jblog_total','jblog_cta','jblog_shares','jblog_note','jcamp_spend','jcamp_leads','jcamp_roi','jcamp_cpa','jcamp_note','jsoc_followers','jsoc_growth','jsoc_er','jsoc_reach','jsoc_extra',
+  'aweb_sessions','aweb_users','aweb_engagement','aweb_goals','aweb_duration',
+  'ablog_engaged','ablog_total','ablog_cta','ablog_shares','ablog_note','acamp_spend','acamp_leads','acamp_roi','acamp_cpa','acamp_note','asoc_followers','asoc_growth','asoc_er','asoc_reach','asoc_extra',
+  'sweb_sessions','sweb_users','sweb_engagement','sweb_goals','sweb_duration',
+  'sblog_engaged','sblog_total','sblog_cta','sblog_shares','sblog_note','scamp_spend','scamp_leads','scamp_roi','scamp_cpa','scamp_note','ssoc_followers','ssoc_growth','ssoc_er','ssoc_reach','ssoc_extra'
 ];
 var BASELINE = {
   nl_delivered:'448', nl_opens:'259', nl_clicks:'76', nl_unsubs:'10',
   jsoc_followers:'579', asoc_followers:'579', ssoc_followers:'579'
 };
+
 function navSetup(){
   document.querySelectorAll('.nav-btn').forEach(function(button){
     button.addEventListener('click', function(){
@@ -357,20 +386,26 @@ function navSetup(){
     });
   });
 }
+
 function showSection(target){
-  document.querySelectorAll('.section').forEach(function(section){section.classList.toggle('active', section.id===target);});
-  document.querySelectorAll('.nav-btn').forEach(function(button){button.classList.toggle('active', button.dataset.target===target);});
+  document.querySelectorAll('.section').forEach(function(section){
+    section.classList.toggle('active', section.id===target);
+  });
+  document.querySelectorAll('.nav-btn').forEach(function(button){
+    button.classList.toggle('active', button.dataset.target===target);
+  });
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function v(id){ return parseFloat((document.getElementById(id) || {}).value) || 0; }
 function setHTML(id, html){ var el=document.getElementById(id); if(el) el.innerHTML=html; }
-function chip(label, cls){ return '<span style="display:inline-flex;padding:8px 12px;border-radius:999px;font-size:.82rem;font-weight:700;text-transform:uppercase;background:' + (cls==='green'?'#d1fae5':cls==='yellow'?'#fef3c7':'#fee2e2') + ';color:' + (cls==='green'?'#166534':cls==='yellow'?'#92400e':'#991b1b') + ';">' + label + '</span>'; }
-function showAction(id,text,cls){ var el=document.getElementById(id); if(!el)return; if(text){ el.textContent=text; el.style.display='block'; } else { el.style.display='none'; }}
+
 function calculate(){
   var del=v('nl_delivered');
   var opens=v('nl_opens');
   var clicks=v('nl_clicks');
   var unsubs=v('nl_unsubs');
+
   if(del>0){
     var or=opens/del*100;
     var ctr=clicks/del*100;
@@ -380,8 +415,6 @@ function calculate(){
     setHTML('summary_ctr',ctr.toFixed(1)+'%');
     setHTML('summary_delivered',del);
     setHTML('summary_unsubs',unsubs);
-    var nlAction='';
-    if(or>=55){nlAction=ctr<10?'Strong opens, improve CTA and layout to lift clicks.':'Open performance is healthy; maintain this cadence.';} else if(or>=45){nlAction='Adjust: Improve subject, timing, or segmentation before the next send.';} else {nlAction='Action required: revisit the send strategy and audience fit.';}
     setHTML('nl_calcs','Open Rate: <strong>'+or.toFixed(1)+'%</strong><br>CTR: <strong>'+ctr.toFixed(1)+'%</strong><br>CTOR: <strong>'+ctor.toFixed(1)+'%</strong><br>Unsub Rate: <strong>'+ur.toFixed(2)+'%</strong>');
   } else {
     setHTML('summary_open_rate','57.9%');
@@ -390,23 +423,97 @@ function calculate(){
     setHTML('summary_unsubs','10');
     setHTML('nl_calcs','');
   }
-  ['jblog','ablog'].forEach(function(pfx){ var eng=v(pfx+'_engaged'); var tot=v(pfx+'_total'); var cta=v(pfx+'_cta'); if(eng>0){ var ctaRate=tot>0?cta/tot*100:0; setHTML(pfx+'_calcs','Engaged Sessions: <strong>'+eng+'</strong>' + (ctaRate>0?'<br>CTA Rate: <strong>'+ctaRate.toFixed(1)+'%</strong>':'')); } else setHTML(pfx+'_calcs',''); });
-  var seng=v('sblog_engaged'); var stot=v('sblog_total'); var scta=v('sblog_cta'); var sctaR=stot>0?scta/stot*100:0; if(seng>0||stot>0){ setHTML('sblog_calcs',(seng>0?'Engaged Sessions: <strong>'+seng+'</strong>':'') + (sctaR>0? '<br>CTA Rate: <strong>'+sctaR.toFixed(1)+'%</strong>':'')); } else setHTML('sblog_calcs','');
-  ['jsoc','asoc','ssoc'].forEach(function(pfx){ var eng=v(pfx+'_eng'); var fol=v(pfx+'_followers'); if(eng>0&&fol>0){ var er=eng/fol*100; setHTML(pfx+'_calcs','Engagement Rate: <strong>'+er.toFixed(2)+'%</strong>'); } else setHTML(pfx+'_calcs',''); });
+
   drawCharts();
 }
+
 function drawCharts(){
-  var del=v('nl_delivered'), opens=v('nl_opens'), clicks=v('nl_clicks'); var nlEmpty=document.getElementById('chart_nl_empty'); var nlCanvas=document.getElementById('chart_nl'); if(del>0){ var or=opens/del*100, ctr=clicks/del*100, ctor=opens>0?clicks/opens*100:0; nlEmpty.style.display='none'; nlCanvas.style.display='block'; drawBar(nlCanvas,[or,ctr,ctor],['Open Rate','CTR','CTOR'],['%','%','%'],[55,10,20],[45,5,12]); } else { nlEmpty.style.display='block'; nlCanvas.style.display='none'; }
-  var jEng=v('jblog_engaged'), aEng=v('ablog_engaged'), sEng=v('sblog_engaged'); var blogEmpty=document.getElementById('chart_blog_empty'); var blogCanvas=document.getElementById('chart_blog'); if(jEng>0||aEng>0||sEng>0){ blogEmpty.style.display='none'; blogCanvas.style.display='block'; drawBar(blogCanvas,[jEng,aEng,sEng],['July','August','September'],['','',''],[100,100,100],[60,60,60]); } else { blogEmpty.style.display='block'; blogCanvas.style.display='none'; }
-  var jF=v('jsoc_followers')||579, aF=v('asoc_followers')||579, sF=v('ssoc_followers')||579; var jER=v('jsoc_eng')>0?v('jsoc_eng')/jF*100:0; var aER=v('asoc_eng')>0?v('asoc_eng')/aF*100:0; var sER=v('ssoc_eng')>0?v('ssoc_eng')/sF*100:0; var socEmpty=document.getElementById('chart_soc_empty'); var socCanvas=document.getElementById('chart_soc'); if(jER>0||aER>0||sER>0){ socEmpty.style.display='none'; socCanvas.style.display='block'; drawBar(socCanvas,[jER,aER,sER],['July','August','September'],['%','%','%'],[4,4,4],[2.5,2.5,2.5]); } else { socEmpty.style.display='block'; socCanvas.style.display='none'; }
+  var del=v('nl_delivered'), opens=v('nl_opens'), clicks=v('nl_clicks');
+  var nlEmpty=document.getElementById('chart_nl_empty');
+  var nlCanvas=document.getElementById('chart_nl');
+  if(del>0){
+    var or=opens/del*100;
+    var ctr=clicks/del*100;
+    var ctor=opens>0?clicks/opens*100:0;
+    nlEmpty.style.display='none'; nlCanvas.style.display='block';
+    drawBar(nlCanvas,[or,ctr,ctor],['Open Rate','CTR','CTOR'],['%','%','%'],[55,10,20],[45,5,12]);
+  } else { nlEmpty.style.display='block'; nlCanvas.style.display='none'; }
+
+  var jEng=v('jblog_engaged'), aEng=v('ablog_engaged'), sEng=v('sblog_engaged');
+  var blogEmpty=document.getElementById('chart_blog_empty');
+  var blogCanvas=document.getElementById('chart_blog');
+  if(jEng>0||aEng>0||sEng>0){
+    blogEmpty.style.display='none'; blogCanvas.style.display='block';
+    drawBar(blogCanvas,[jEng,aEng,sEng],['July','August','September'],['','',''],[100,100,100],[60,60,60]);
+  } else { blogEmpty.style.display='block'; blogCanvas.style.display='none'; }
+
+  var jER=v('jsoc_er'), aER=v('asoc_er'), sER=v('ssoc_er');
+  var socEmpty=document.getElementById('chart_soc_empty');
+  var socCanvas=document.getElementById('chart_soc');
+  if(jER>0||aER>0||sER>0){
+    socEmpty.style.display='none'; socCanvas.style.display='block';
+    drawBar(socCanvas,[jER,aER,sER],['July','August','September'],['%','%','%'],[4,4,4],[2.5,2.5,2.5]);
+  } else { socEmpty.style.display='block'; socCanvas.style.display='none'; }
+
+  var jWeb=v('jweb_sessions'), aWeb=v('aweb_sessions'), sWeb=v('sweb_sessions');
+  var webEmpty=document.getElementById('chart_web_empty');
+  var webCanvas=document.getElementById('chart_web');
+  if(jWeb>0||aWeb>0||sWeb>0){
+    webEmpty.style.display='none'; webCanvas.style.display='block';
+    drawBar(webCanvas,[jWeb,aWeb,sWeb],['July','August','September'],['','',''],[1000,1000,1000],[500,500,500]);
+  } else { webEmpty.style.display='block'; webCanvas.style.display='none'; }
 }
-function drawBar(canvas,data,labels,units,greenThrs,yellowThrs){ var W=canvas.parentElement.clientWidth-28; var H=220; canvas.width=W; canvas.height=H; var ctx=canvas.getContext('2d'); ctx.clearRect(0,0,W,H); var n=data.length; var padL=24,padR=24,padT=30,padB=34; var chartW=W-padL-padR; var chartH=H-padT-padB; var maxVal=Math.max.apply(null,data.concat(greenThrs).concat([1])); var barW=Math.max(26,Math.floor(chartW/(n*2.3))); var gap=n>1?(chartW-barW*n)/(n-1):0; ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=1; for(var g=1;g<=4;g++){var gy=padT+chartH-(g/4)*chartH; ctx.beginPath(); ctx.moveTo(padL,gy); ctx.lineTo(W-padR,gy); ctx.stroke(); } data.forEach(function(val,i){ var green=greenThrs[i], yellow=yellowThrs[i]; var barH=val>0?Math.max(4,Math.round((val/maxVal)*chartH)):0; var x=padL+i*(barW+gap); var y=padT+chartH-barH; if(green>0){ var tY=padT+chartH-(green/maxVal)*chartH; ctx.save(); ctx.strokeStyle='#a7f3d0'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(x-4,tY); ctx.lineTo(x+barW+4,tY); ctx.stroke(); ctx.restore(); } var color='#cbd5e1'; if(val>0){ color=val>=green?'#22c55e': val>=yellow?'#f59e0b':'#ef4444'; } ctx.fillStyle=color; if(barH>0) ctx.fillRect(x,y,barW,barH); if(val>0){ ctx.fillStyle='#111827'; ctx.font='600 11px Inter,ui-sans-serif'; ctx.textAlign='center'; var str=val.toFixed(1)+(units[i]||''); ctx.fillText(str,x+barW/2,Math.max(padT+12,y-8)); } ctx.fillStyle='#475569'; ctx.font='10px Inter,ui-sans-serif'; ctx.textAlign='center'; ctx.fillText(labels[i],x+barW/2,H-12); }); }
-function saveDashboard(btn){ var data={}; FIELD_IDS.forEach(function(id){ var el=document.getElementById(id); if(el) data[id]=el.value; }); localStorage.setItem('804_dash_v1',JSON.stringify(data)); var now=new Date(); var ds=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); document.querySelector('.footer').textContent='Saved: '+ds+' · Source: GA4 · GHL · Meta Insights · GBP'; var orig=btn.textContent; btn.textContent='Saved'; btn.style.background='#22c55e'; btn.style.color='#fff'; setTimeout(function(){ btn.textContent=orig; btn.style.background=''; btn.style.color=''; },1500); }
-function resetDashboard(){ if(!confirm('Clear all entered values?')) return; FIELD_IDS.forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; }); localStorage.removeItem('804_dash_v1'); calculate(); }
-function restoreDefaults(){ FIELD_IDS.forEach(function(id){ var el=document.getElementById(id); if(el) el.value=BASELINE[id]||''; }); calculate(); }
-function loadSaved(){ var raw=localStorage.getItem('804_dash_v1'); if(!raw) return; try{ var data=JSON.parse(raw); FIELD_IDS.forEach(function(id){ if(data[id]!==undefined){ var el=document.getElementById(id); if(el) el.value=data[id]; } }); calculate(); } catch(e){} }
-document.addEventListener('DOMContentLoaded', function(){ navSetup(); loadSaved(); });
-window.addEventListener('resize', drawCharts);
+
+function drawBar(canvas,data,labels,units,greenThrs,yellowThrs){
+  var W=canvas.parentElement.clientWidth-28;
+  var H=220;
+  canvas.width=W; canvas.height=H;
+  var ctx=canvas.getContext('2d'); ctx.clearRect(0,0,W,H);
+  var n=data.length;
+  var padL=24,padR=24,padT=30,padB=34;
+  var chartW=W-padL-padR;
+  var chartH=H-padT-padB;
+  var maxVal=Math.max.apply(null,data.concat(greenThrs).concat([1]));
+  var barW=Math.max(26,Math.floor(chartW/(n*2.3)));
+  var gap=n>1?(chartW-barW*n)/(n-1):0;
+  ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=1;
+  for(var g=1;g<=4;g++){var gy=padT+chartH-(g/4)*chartH;ctx.beginPath();ctx.moveTo(padL,gy);ctx.lineTo(W-padR,gy);ctx.stroke();}
+  data.forEach(function(val,i){
+    var green=greenThrs[i], yellow=yellowThrs[i];
+    var barH=val>0?Math.max(4,Math.round((val/maxVal)*chartH)):0;
+    var x=padL+i*(barW+gap);
+    var y=padT+chartH-barH;
+    if(green>0){
+      var tY=padT+chartH-(green/maxVal)*chartH;
+      ctx.save(); ctx.strokeStyle='#a7f3d0'; ctx.setLineDash([4,3]); ctx.beginPath(); ctx.moveTo(x-4,tY); ctx.lineTo(x+barW+4,tY); ctx.stroke(); ctx.restore();
+    }
+    var color='#cbd5e1';
+    if(val>0){color=val>=green?'#22c55e':val>=yellow?'#f59e0b':'#ef4444';}
+    ctx.fillStyle=color; if(barH>0)ctx.fillRect(x,y,barW,barH);
+    if(val>0){ctx.fillStyle='#111827';ctx.font='600 11px Inter,ui-sans-serif';ctx.textAlign='center';var str=val.toFixed(1)+(units[i]||'');ctx.fillText(str,x+barW/2,Math.max(padT+12,y-8));}
+    ctx.fillStyle='#475569';ctx.font='10px Inter,ui-sans-serif';ctx.textAlign='center';ctx.fillText(labels[i],x+barW/2,H-12);
+  });
+}
+
+function saveDashboard(btn){
+  var data={};
+  FIELD_IDS.forEach(function(id){var el=document.getElementById(id); if(el)data[id]=el.value;});
+  localStorage.setItem('804_dash_v1',JSON.stringify(data));
+  var now=new Date();
+  var ds=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  document.querySelector('.footer').textContent='Saved: '+ds+' · Source: GA4 · GHL · Meta Insights · GBP';
+  var orig=btn.textContent; btn.textContent='Saved'; btn.style.background='#22c55e'; btn.style.color='#fff';
+  setTimeout(function(){btn.textContent=orig; btn.style.background=''; btn.style.color='';},1500);
+}
+
+function resetDashboard(){ if(!confirm('Clear all entered values?')) return; FIELD_IDS.forEach(function(id){var el=document.getElementById(id); if(el)el.value='';}); localStorage.removeItem('804_dash_v1'); calculate(); }
+
+function restoreDefaults(){ FIELD_IDS.forEach(function(id){var el=document.getElementById(id); if(el)el.value=BASELINE[id]||'';}); calculate(); }
+
+function loadSaved(){var raw=localStorage.getItem('804_dash_v1'); if(!raw) return; try{var data=JSON.parse(raw); FIELD_IDS.forEach(function(id){ if(data[id]!==undefined){var el=document.getElementById(id); if(el)el.value=data[id];}}); calculate();}catch(e){}}
+
+document.addEventListener('DOMContentLoaded',function(){navSetup(); loadSaved();});
+window.addEventListener('resize',drawCharts);
 </script>
 </body>
 </html>
